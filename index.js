@@ -4,7 +4,7 @@ let quotes = [];
 const voicesDropdown = document.querySelector('[name="voice"]');
 const options = document.querySelectorAll('[type="range"],[name="text"]');
 const speakButton = document.querySelector("#speak");
-const stopBUtton = document.querySelector("#stop");
+const stopButton = document.querySelector("#stop");
 const generateQuoteButton = document.querySelector("#generateQuote");
 const blockquote = document.querySelector("blockquote");
 
@@ -37,32 +37,34 @@ function setOption() {
   toggle();
 }
 
-setSpeechText("Hi Nafisa and Antonio");
+function generateQuote() {
+    const quote = choseRandomQuote(quotes);
+    const quoteText = document.querySelector("#quote-text")
+    const quoteAuthor= document.querySelector("#quote-author")
 
+    const quoteSample = `${quote.text} --- ${
+      quote.author ? quote.author : "Unknown"
+    }`;
+    quoteText.textContent = quote.text;
+    quoteAuthor.textContent= quote.author
+  
+    setSpeechText (quoteSample);
+  }
+  
+  function choseRandomQuote(quotesArray) {
+    const index = Math.floor(Math.random() * (quotesArray.length - 1));
+    return quotesArray[index];
+  }
+  
 speechSynthesis.addEventListener("voiceschanged", populateVoices);
 voicesDropdown.addEventListener("change", setVoice);
 options.forEach((option) => option.addEventListener("change", setOption));
 speakButton.addEventListener("click", toggle);
-stopBUtton.addEventListener("click", function () {
+stopButton.addEventListener("click", function () {
   toggle(false);
 });
 generateQuoteButton.addEventListener("click", generateQuote);
 
-//fetch of the api section
-function generateQuote() {
-  const quote = choseRandomQuote(quotes);
-  const quoteText = `${quote.text} --- ${
-    quote.author ? quote.author : "Unknown"
-  }`;
-  blockquote.textContent = quoteText;
-
-  setSpeechText(quoteText);
-}
-
-function choseRandomQuote(quotesArray) {
-  const index = Math.floor(Math.random() * (quotesArray.length - 1));
-  return quotesArray[index];
-}
 
 fetch("https://type.fit/api/quotes")
   .then((response) => response.json())
