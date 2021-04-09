@@ -1,9 +1,11 @@
 const speechObj = new SpeechSynthesisUtterance();
 let voices = [];
+let quotes=[]
 const voicesDropdown = document.querySelector('[name="voice"]');
 const options = document.querySelectorAll('[type="range"],[name="text"]');
 const speakButton = document.querySelector("#speak");
 const stopBUtton = document.querySelector("#stop");
+const getQuote = document.querySelector("#generateQuote")
 
 const setSpeechText = (text) => (speechObj.text = text);
 
@@ -42,24 +44,27 @@ speakButton.addEventListener("click", toggle)
 stopBUtton.addEventListener("click", function(){
     toggle(false);
 });
+getQuote.addEventListener("click",choseRandomQuote)
 
-setSpeechText("Hi Nafisa and Antonio");
+
 
 //fetch of the api section
+function generateQuote(){
+    choseRandomQuote(data)
+    setSpeechText(
+        `${quote.text} --- ${quote.author ? quote.author : "Unknown"}`
+      )
+    
+}
 
 function choseRandomQuote(quotesArray) {
   const index = Math.floor(Math.random() * (quotesArray.length - 1));
   return quotesArray[index];
+
 }
 
-fetch("https://type.fit/api/quotes")
+ fetch("https://type.fit/api/quotes")
   .then((response) => response.json())
-  .then((data) => choseRandomQuote(data))
-  .then((quote) =>
-    setSpeechText(
-      `${quote.text} --- ${quote.author ? quote.author : "Unknown"}`
-    )
-  )
-  .then(console.log(speechObj))
-  .catch(console.log(error));
-
+  .then((data) => quotes = data)
+  .then(console.log(quotes))
+  .catch((error) => console.log(error));
