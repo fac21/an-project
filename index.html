@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Text To Speech App">
+    <title>Text To Speech App</title>
+</head>
+<body>
+    <h1>The Voice </h1> 
+
+    <select name="voice" id="voices">
+        <option value="">Select a voice</option>
+    </select>
+
+    <label for="rate">Rate:</label>
+    <input type="range" name="range" min="0" max="3" value="1" step="0.1">
+
+    <label for="pitch">Pitch:</label>
+    <input type="range" name="pitch" min="0" max="2" step="0.1">
+
+    <textarea name="text">Hello </textarea>
+    <button id="stop">Stop</button>
+    <button id="speak">Speak</button>
+</body>
+</html>
